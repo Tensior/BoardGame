@@ -5,7 +5,7 @@ namespace Meta
 {
     public class SceneLoader : ISceneLoader
     {
-        public const string LEVEL1 = "level1";
+        public const string LEVEL1 = "Level1";
         private const string MAIN_MENU = "MainMenu";
         
         private readonly IMusicController _musicController;

@@ -17,7 +17,7 @@ namespace UIMediation.Mediators
             Show();
         }
 
-        protected override void Show()
+        public override void Show()
         {
             base.Show();
             
@@ -25,7 +25,7 @@ namespace UIMediation.Mediators
             _mainMenuVM.OnExitGameClicked += ExitGame;
         }
 
-        protected override void Hide()
+        public override void Hide()
         {
             base.Hide();
             

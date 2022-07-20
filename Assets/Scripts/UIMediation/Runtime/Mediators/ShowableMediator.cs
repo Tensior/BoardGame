@@ -11,12 +11,12 @@ namespace UIMediation.Mediators
             _showableViewModel = showableViewModel;
         }
 
-        protected virtual void Show()
+        public virtual void Show()
         {
             _showableViewModel.IsShown = true;
         }
 
-        protected virtual void Hide()
+        public virtual void Hide()
         {
             _showableViewModel.IsShown = false;
         }
