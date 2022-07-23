@@ -1,5 +1,4 @@
 ﻿using Input.Interfaces;
-using Input.Providers;
 using Zenject;
 
 namespace Installers
@@ -14,8 +13,7 @@ namespace Installers
 
         private void InstallInput()
         {
-            Container.Bind<InputActions>().FromNew().AsSingle().NonLazy();
-            Container.Bind<IInputProvider>().To<InputProvider>().AsSingle().NonLazy();
+            //Container.Bind<IInputProvider>().To<InputProvider>().AsSingle().NonLazy();
         }
 
         private void InstallPools()

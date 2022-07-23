@@ -2,7 +2,7 @@ using Input.Interfaces;
 
 namespace Input.Providers
 {
-    public class InputProvider : IInputProvider
+    /*public class InputProvider : IInputProvider
     {
         //TODO: setup proper input actions
         private readonly InputActions _controls;
@@ -26,5 +26,5 @@ namespace Input.Providers
                 _controls.Player.Disable();
             }
         }
-    }
+    }*/
 }
