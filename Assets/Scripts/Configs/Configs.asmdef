@@ -1,10 +1,8 @@
 {
-    "name": "UIMediation",
+    "name": "Configs",
     "rootNamespace": "",
     "references": [
-        "GUID:48f7fca5c0b977e4d96598abc366c952",
-        "GUID:73d25568841cfbf4db4880af94ba6dd0",
-        "GUID:a35269775d3c7d84f95ddecb20a624ca"
+        "GUID:29b805902dbf08549aba4da6dcc79cfb"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
