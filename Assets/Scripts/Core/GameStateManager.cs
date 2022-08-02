@@ -1,24 +1,25 @@
 using Core.States;
 using UnityEngine;
+using Zenject;
 
 namespace Core
 {
     public class GameStateManager : MonoBehaviour
     {
         private FiniteStateMachine _fsm;
-        /*private ITurnsProvider _turnsProvider;
-        private IPlayersProvider _playersProvider;
+        private StartTurnState _startTurnState;
 
         [Inject]
-        private void Inject(ITurnsProvider turnsProvider, IPlayersProvider playersProvider)
+        private void Inject(StartTurnState startTurnState)
         {
-            _turnsProvider = turnsProvider;
-            _playersProvider = playersProvider;
-        }*/
+            _startTurnState = startTurnState;
+        }
         
         private void Awake()
         {
             _fsm = new FiniteStateMachine();
+            
+            _fsm.EnterState(_startTurnState);
         }
 
         private void Update()

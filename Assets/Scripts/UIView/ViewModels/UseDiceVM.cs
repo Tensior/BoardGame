@@ -4,6 +4,7 @@ using UnityWeld.Binding;
 
 namespace UIView.ViewModels
 {
+    [Binding]
     public class UseDiceVM : ShowableViewModel
     {
         public event Action OnStopDice;

@@ -1,13 +1,16 @@
+using UnityEngine;
+
 namespace Core.States
 {
     public class FiniteStateMachine
     {
         public IState CurrentState { get; private set; }
         
-        public void EnterState(IState startingState)
+        public void EnterState(IState state)
         {
-            CurrentState = startingState;
-            startingState.Enter();
+            Debug.Log($"Entering {state.GetType().Name}");
+            CurrentState = state;
+            state.Enter();
         }
 
         public void ChangeState(IState newState)

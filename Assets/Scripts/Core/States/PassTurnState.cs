@@ -1,20 +1,29 @@
+using Core.Turns;
+
 namespace Core.States
 {
     public class PassTurnState : IState
     {
+        private readonly ITurnsController _turnsController;
+
+        public PassTurnState(ITurnsController turnsController)
+        {
+            _turnsController = turnsController;
+        }
+
         void IState.Enter()
         {
-            throw new System.NotImplementedException();
+            _turnsController.NextTurn();
         }
 
         IState IState.Update()
         {
-            throw new System.NotImplementedException();
+            return StatesContainer.StartTurnState;
         }
 
         void IState.Exit()
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
     }
 }

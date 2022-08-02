@@ -34,5 +34,11 @@ namespace UIMediation.Mediators
         {
             InputController.IsLargeDiceChosen = true;
         }
+
+        public void SetDicesAvailability(bool canUseSmall, bool canUseLarge)
+        {
+            ViewModel.CanUseSmallDice = canUseSmall;
+            ViewModel.CanUseLargeDice = canUseLarge;
+        }
     }
 }

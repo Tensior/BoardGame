@@ -15,11 +15,15 @@ namespace Installers
         private void InstallViews()
         {
             Container.Bind<GameMenuVM>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.Bind<GameTurnVM>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.Bind<UseDiceVM>().FromComponentInHierarchy().AsSingle().NonLazy();
         }
 
         private void InstallMediators()
         {
             Container.Bind<GameMenuMediator>().AsSingle().NonLazy();
+            Container.Bind<GameTurnMediator>().AsSingle().NonLazy();
+            Container.Bind<UseDiceMediator>().AsSingle().NonLazy();
         }
     }
 }

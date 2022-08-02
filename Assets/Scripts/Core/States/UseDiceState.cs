@@ -10,7 +10,6 @@ namespace Core.States
     {
         private readonly UseDiceMediator _useDiceMediator;
         private readonly IInputProvider _inputProvider;
-        private readonly PassTurnState _passTurnState;
 
         private int _animationPeriodMs;
         private int _animationPeriodDecreaseStepMs;
@@ -20,11 +19,10 @@ namespace Core.States
         protected abstract int Min { get; }
         protected abstract int Max { get; }
 
-        protected UseDiceState(UseDiceMediator useDiceMediator, IInputProvider inputProvider, PassTurnState passTurnState)
+        protected UseDiceState(UseDiceMediator useDiceMediator, IInputProvider inputProvider)
         {
             _useDiceMediator = useDiceMediator;
             _inputProvider = inputProvider;
-            _passTurnState = passTurnState;
         }
 
         void IState.Enter()
@@ -50,7 +48,7 @@ namespace Core.States
             if (_animationPeriodMs <= 0)
             {
                 _cancellationTokenSource.Cancel();
-                return _passTurnState;
+                return StatesContainer.PassTurnState;
             }
 
             return null;

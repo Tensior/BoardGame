@@ -11,7 +11,7 @@ namespace Installers
         
         public override void InstallBindings()
         {
-            Container.Bind<TurnsConfigSO>().AsSingle().NonLazy();
+            Container.Bind<TurnsConfigSO>().FromInstance(_turnsConfig).AsSingle().NonLazy();
         }
     }
 }

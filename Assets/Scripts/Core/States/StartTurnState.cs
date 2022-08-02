@@ -1,35 +1,37 @@
 using Input;
+using UIMediation.Mediators;
 
 namespace Core.States
 {
     public class StartTurnState : IState
     {
         private readonly IInputProvider _inputProvider;
-        private readonly UseDiceState _useDiceState;
+        private readonly GameTurnMediator _gameTurnMediator;
         private IState _stateToSwitch;
 
-        public StartTurnState(IInputProvider inputProvider, UseDiceState useDiceState)
+        public StartTurnState(IInputProvider inputProvider, GameTurnMediator gameTurnMediator)
         {
             _inputProvider = inputProvider;
-            _useDiceState = useDiceState;
+            _gameTurnMediator = gameTurnMediator;
         }
 
         void IState.Enter()
         {
             _stateToSwitch = null;
 
-            //TODO: show turn interface or make it interactable
+            _gameTurnMediator.Show();
+            _gameTurnMediator.SetDicesAvailability(true, true);
         }
 
         IState IState.Update()
         {
             if (_inputProvider.IsSmallDiceChosen)
             {
-                _stateToSwitch = _useDiceState;
+                _stateToSwitch = StatesContainer.SmallUseDiceState;
             }
             else if (_inputProvider.IsLargeDiceChosen)
             {
-                _stateToSwitch = _useDiceState;
+                _stateToSwitch = StatesContainer.LargeUseDiceState;
             }
             
             return _stateToSwitch;
