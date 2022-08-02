@@ -23,10 +23,10 @@ namespace Installers
         private void InstallStates()
         {
             Container.Bind<GameStateManager>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.Bind<PassTurnState>().AsSingle().NonLazy();
             Container.Bind<StartTurnState>().AsSingle().NonLazy();
             Container.Bind<SmallUseDiceState>().AsSingle().NonLazy();
             Container.Bind<LargeUseDiceState>().AsSingle().NonLazy();
-            Container.Bind<PassTurnState>().AsSingle().NonLazy();
             Container.Bind<StatesContainer>().AsSingle().NonLazy();
         }
 

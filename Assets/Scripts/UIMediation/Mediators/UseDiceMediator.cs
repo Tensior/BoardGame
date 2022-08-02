@@ -6,6 +6,12 @@ namespace UIMediation.Mediators
 {
     public class UseDiceMediator : InputShowableMediator<UseDiceVM>
     {
+        public int Number
+        {
+            get => ViewModel.Number;
+            set => ViewModel.Number = value;
+        }
+
         public UseDiceMediator(UseDiceVM viewModel, IInputController inputController) 
             : base(viewModel, inputController) { }
 
@@ -21,11 +27,6 @@ namespace UIMediation.Mediators
             base.Hide();
 
             ViewModel.OnStopDice -= DiceStopped;
-        }
-
-        public void SetNumber(int number)
-        {
-            ViewModel.Number = number;
         }
 
         private void DiceStopped()

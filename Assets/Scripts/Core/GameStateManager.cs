@@ -7,19 +7,19 @@ namespace Core
     public class GameStateManager : MonoBehaviour
     {
         private FiniteStateMachine _fsm;
-        private StartTurnState _startTurnState;
+        private PassTurnState _passTurnState;
 
         [Inject]
-        private void Inject(StartTurnState startTurnState)
+        private void Inject(PassTurnState passTurnState)
         {
-            _startTurnState = startTurnState;
+            _passTurnState = passTurnState;
         }
         
         private void Awake()
         {
             _fsm = new FiniteStateMachine();
             
-            _fsm.EnterState(_startTurnState);
+            _fsm.EnterState(_passTurnState);
         }
 
         private void Update()
@@ -27,7 +27,7 @@ namespace Core
             var stateToSwitch = _fsm.CurrentState.Update();
             if (stateToSwitch != null)
             {
-                _fsm.ChangeState(stateToSwitch/*, _playersProvider.GetPlayer(_turnsProvider.CurrentPlayerID)*/);
+                _fsm.ChangeState(stateToSwitch);
             }
         }
     }

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Configs;
-using Utils;
 
 namespace Core.Turns
 {
@@ -9,27 +8,33 @@ namespace Core.Turns
     {
         private readonly TurnsConfigSO _turnsConfig;
         
-        private readonly IEnumerator<PlayerID> _turnsCycle;
-        private PlayerID _currentPlayer;
+        private readonly IEnumerator<PlayerID> _turns;
+        private int _turnNumber;
 
-        PlayerID ITurnsProvider.CurrentPlayerID => _currentPlayer;
+        PlayerID ITurnsProvider.CurrentPlayerID => _turns.Current;
 
         TurnData ITurnsProvider.CurrentTurnData =>
-            _turnsConfig.PlayerTurnData.Find(t => t._playerID == _currentPlayer).TurnData;
+            _turnsConfig.PlayerTurnData.Find(t => t._playerID == _turns.Current).TurnData;
+
+        int ITurnsProvider.TurnNumber => _turnNumber;
 
         public TurnsManager(TurnsConfigSO turnsConfig)
         {
             _turnsConfig = turnsConfig;
-            _turnsCycle = turnsConfig.PlayerTurnData.Select(t => t._playerID).CyclicCopy().GetEnumerator();
-            _currentPlayer = _turnsCycle.Current;
+            _turns = turnsConfig.PlayerTurnData.Select(t => t._playerID).ToList().GetEnumerator();
+            _turnNumber = 1;
         }
 
         void ITurnsController.NextTurn()
         {
-            if (_turnsCycle.MoveNext())
+            if (_turns.MoveNext())
             {
-                _currentPlayer = _turnsCycle.Current;
+                return;
             }
+            
+            _turns.Reset();
+            _turns.MoveNext();
+            ++_turnNumber;
         }
     }
 }

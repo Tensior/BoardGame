@@ -63,7 +63,8 @@ namespace Core.States
         {
             while (!_cancellationToken.IsCancellationRequested)
             {
-                _useDiceMediator.SetNumber(Random.Range(Min, Max + 1));
+                
+                _useDiceMediator.Number = GetNewRandom(_useDiceMediator.Number, Min, Max + 1);
                 
                 await Task.Delay(_animationPeriodMs, _cancellationToken);
 
@@ -74,6 +75,24 @@ namespace Core.States
         private void DecreaseAnimationSpeed()
         {
             _animationPeriodMs -= _animationPeriodDecreaseStepMs;
+        }
+
+        private int GetNewRandom(int prevValue, int min, int max)
+        {
+            var tryCount = 100;
+            
+            while (tryCount > 0)
+            {
+                var value = Random.Range(min, max);
+                if (value != prevValue)
+                {
+                    return value;
+                }
+
+                --tryCount;
+            }
+
+            return prevValue;
         }
     }
 }
