@@ -8,6 +8,8 @@ namespace Core
     {
         private FiniteStateMachine _fsm;
         private PassTurnState _passTurnState;
+        
+        public IState CurrentState => _fsm.CurrentState;
 
         [Inject]
         private void Inject(PassTurnState passTurnState)
