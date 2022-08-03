@@ -9,23 +9,28 @@ namespace Core.Turns
         private readonly TurnsConfigSO _turnsConfig;
         
         private readonly IEnumerator<PlayerID> _turns;
-        private int _turnNumber;
+        private bool _isSmallDiceAvailable;
+        private bool _isLargeDiceAvailable;
 
-        PlayerID ITurnsProvider.CurrentPlayerID => _turns.Current;
+        public PlayerID CurrentPlayerID => _turns.Current;
 
-        TurnData ITurnsProvider.CurrentTurnData =>
+        public TurnData CurrentTurnData =>
             _turnsConfig.PlayerTurnData.Find(t => t._playerID == _turns.Current).TurnData;
 
-        int ITurnsProvider.TurnNumber => _turnNumber;
+        public int TurnNumber { get; private set; }
+
+        public bool IsSmallDiceAvailable => TurnNumber % CurrentTurnData.SmallDiceUseRate == 0;
+
+        public bool IsLargeDiceAvailable => TurnNumber % CurrentTurnData.LargeDiceUseRate == 0;
 
         public TurnsManager(TurnsConfigSO turnsConfig)
         {
             _turnsConfig = turnsConfig;
             _turns = turnsConfig.PlayerTurnData.Select(t => t._playerID).ToList().GetEnumerator();
-            _turnNumber = 1;
+            TurnNumber = 1;
         }
 
-        void ITurnsController.NextTurn()
+        public void NextTurn()
         {
             if (_turns.MoveNext())
             {
@@ -34,7 +39,7 @@ namespace Core.Turns
             
             _turns.Reset();
             _turns.MoveNext();
-            ++_turnNumber;
+            ++TurnNumber;
         }
     }
 }

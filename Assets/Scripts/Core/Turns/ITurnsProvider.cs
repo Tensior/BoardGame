@@ -7,5 +7,7 @@ namespace Core.Turns
         PlayerID CurrentPlayerID { get; }
         TurnData CurrentTurnData { get; }
         int TurnNumber { get; }
+        bool IsSmallDiceAvailable { get; }
+        bool IsLargeDiceAvailable { get; }
     }
 }

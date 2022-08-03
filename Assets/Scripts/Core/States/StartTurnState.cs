@@ -26,8 +26,8 @@ namespace Core.States
             _gameTurnMediator.Show();
 
             _gameTurnMediator.SetDicesAvailability(
-                _turnsProvider.TurnNumber % _turnsProvider.CurrentTurnData.SmallDiceUseRate == 0,
-                _turnsProvider.TurnNumber % _turnsProvider.CurrentTurnData.LargeDiceUseRate == 0);
+                _turnsProvider.IsSmallDiceAvailable,
+                _turnsProvider.IsLargeDiceAvailable);
 
             /*switch (_turnsProvider.CurrentPlayerID)
             {
