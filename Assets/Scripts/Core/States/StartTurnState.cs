@@ -29,15 +29,19 @@ namespace Core.States
                 _turnsProvider.IsSmallDiceAvailable,
                 _turnsProvider.IsLargeDiceAvailable);
 
-            /*switch (_turnsProvider.CurrentPlayerID)
+            switch (_turnsProvider.CurrentPlayerID)
             {
                 case PlayerID.Player:
-                    _gameTurnMediator.Show();
+                    _gameTurnMediator.SetDicesAvailability(
+                        _turnsProvider.IsSmallDiceAvailable,
+                        _turnsProvider.IsLargeDiceAvailable);
                     break;
                 case PlayerID.Enemy1:
-                    _gameTurnMediator.Hide();
+                    _gameTurnMediator.SetDicesAvailability(
+                        false,
+                        false);
                     break;
-            }*/
+            }
         }
 
         IState IState.Update()

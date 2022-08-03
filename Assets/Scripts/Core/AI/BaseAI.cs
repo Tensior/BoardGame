@@ -1,6 +1,7 @@
 ﻿using Configs;
 using Core.States;
 using Core.Turns;
+using Input;
 using UnityEngine;
 using Zenject;
 
@@ -10,27 +11,33 @@ namespace Core.AI
     public abstract class BaseAI : MonoBehaviour
     {
         [SerializeField] private Vector2 _actionCooldownMinMax;
-        
+
+        protected ITurnsProvider TurnsProvider;
+        protected IInputController InputController;
         private GameStateManager _gameStateManager;
-        private ITurnsProvider _turnsProvider;
         private PlayerID _playerId;
         private float _actionCooldownLeft;
 
         [Inject]
-        private void Inject(GameStateManager gameStateManager, ITurnsProvider turnsProvider)
+        private void Inject(
+            ITurnsProvider turnsProvider, 
+            IInputController inputController,
+            GameStateManager gameStateManager)
         {
+            TurnsProvider = turnsProvider;
+            InputController = inputController;
             _gameStateManager = gameStateManager;
-            _turnsProvider = turnsProvider;
         }
 
         private void Start()
         {
             _playerId = GetComponent<Player>().PlayerID;
+            StartCooldown();
         }
 
         private void Update()
         {
-            if (_playerId != _turnsProvider.CurrentPlayerID)
+            if (_playerId != TurnsProvider.CurrentPlayerID)
             {
                 return;
             }
@@ -50,14 +57,23 @@ namespace Core.AI
             switch (state)
             {
                 case StartTurnState:
-                    /*_actionCooldownLeft = Random.Range(_actionCooldownMinMax.x, _actionCooldownMinMax.y);
+                    StartCooldown();
                     StartTurnAct();
-                    break;*/
+                    break;
                 case UseDiceState:
-                    _actionCooldownLeft = Random.Range(_actionCooldownMinMax.x, _actionCooldownMinMax.y);
+                    StartCooldown();
                     UseDiceAct();
                     break;
             }
+        }
+
+        protected abstract void StartTurnAct();
+
+        protected abstract void UseDiceAct();
+
+        private void StartCooldown()
+        {
+            _actionCooldownLeft = Random.Range(_actionCooldownMinMax.x, _actionCooldownMinMax.y);
         }
     }
 }

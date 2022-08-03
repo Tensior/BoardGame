@@ -414,6 +414,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17b8ca335f0655949a69eedc64aa7bf7, type: 3}
+--- !u!1 &452031903 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2159771243795057550, guid: 17b8ca335f0655949a69eedc64aa7bf7, type: 3}
+  m_PrefabInstance: {fileID: 452031902}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &452031904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452031903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd8fd01171c4725ada928b3a476742e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionCooldownMinMax: {x: 1, y: 2}
 --- !u!1 &566333670
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,6 +1571,10 @@ PrefabInstance:
     - target: {fileID: 5851464577304824650, guid: 71ec16019efee504db117f642a294f73, type: 3}
       propertyPath: viewModelMethodName
       value: UIView.ViewModels.GameTurnVM.UseLargeDice
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056876551768202931, guid: 71ec16019efee504db117f642a294f73, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71ec16019efee504db117f642a294f73, type: 3}
