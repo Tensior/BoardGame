@@ -75,7 +75,7 @@ namespace Core.Editor.MapEditor
                             Undo.RecordObjects(_originalNodes.ToArray(), $"Adding new node");
 
                             var originalTransform = _originalNodes.First().transform;
-                            var newNodePosition = new Vector3(hit.point.x, originalTransform.position.y, hit.point.z);
+                            var newNodePosition = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
                             _newNode = Instantiate(_originalNodes.First(), newNodePosition, originalTransform.rotation, originalTransform.parent);
                             _newNode.NextNodes.Clear();
 
