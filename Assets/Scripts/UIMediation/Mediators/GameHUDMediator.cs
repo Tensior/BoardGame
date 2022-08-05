@@ -6,7 +6,7 @@ namespace UIMediation.Mediators
 {
     public sealed class GameHUDMediator : ShowableMediator<GameHUDVM>
     {
-        private readonly ISceneLoader _sceneLoader;
+        private readonly ILevelLoader _levelLoader;
         
         public string CurrentPlayer
         {
@@ -20,9 +20,9 @@ namespace UIMediation.Mediators
             set => ViewModel.CurrentTurn = value;
         }
 
-        public GameHUDMediator(GameHUDVM gameHUDVM, ISceneLoader sceneLoader) : base(gameHUDVM)
+        public GameHUDMediator(GameHUDVM gameHUDVM, ILevelLoader levelLoader) : base(gameHUDVM)
         {
-            _sceneLoader = sceneLoader;
+            _levelLoader = levelLoader;
             
             Show();
         }
@@ -45,7 +45,7 @@ namespace UIMediation.Mediators
         {
             Hide();
             
-            _sceneLoader.LoadMainMenuAsync();
+            _levelLoader.LoadMainMenuAsync();
         }
     }
 }

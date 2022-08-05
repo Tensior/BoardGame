@@ -7,11 +7,11 @@ namespace UIMediation.Mediators
 {
     public sealed class MainMenuMediator : ShowableMediator<MainMenuVM>
     {
-        private readonly ISceneLoader _sceneLoader;
+        private readonly ILevelLoader _levelLoader;
 
-        public MainMenuMediator(MainMenuVM mainMenuVM, ISceneLoader sceneLoader) : base(mainMenuVM)
+        public MainMenuMediator(MainMenuVM mainMenuVM, ILevelLoader levelLoader) : base(mainMenuVM)
         {
-            _sceneLoader = sceneLoader;
+            _levelLoader = levelLoader;
             
             Show();
         }
@@ -35,7 +35,7 @@ namespace UIMediation.Mediators
         private async void StartGame()
         {
             Hide();
-            await _sceneLoader.LoadLevelAsync();
+            await _levelLoader.LoadLevelAsync();
         }
 
         private void ExitGame()

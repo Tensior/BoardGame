@@ -2,7 +2,7 @@
 
 namespace Meta
 {
-    public interface ISceneLoader
+    public interface ILevelLoader
     {
         Task LoadLevelAsync();
         Task LoadMainMenuAsync();

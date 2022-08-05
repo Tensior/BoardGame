@@ -19,7 +19,7 @@ namespace Meta
         {
             _levelMusic = new Dictionary<string, AudioSource>
             {
-                { SceneLoader.LEVEL1, _level1Music }
+                { LevelLoader.UNDERWATER_LEVEL, _level1Music }
             };
 
             PlayMainMenuMusic();
