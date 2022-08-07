@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Installers
 {
-    public class LevelUIInstaller : MonoInstaller
+    public class GameplayUIInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {

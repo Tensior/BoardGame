@@ -1,30 +1,22 @@
 using Core.States;
-using UnityEngine;
 using Zenject;
 
 namespace Core
 {
-    public class GameStateManager : MonoBehaviour
+    public class GameStateManager : IInitializable, ITickable, ICurrentStateProvider
     {
         private FiniteStateMachine _fsm;
-        private PassTurnState _passTurnState;
-        
-        public IState CurrentState => _fsm.CurrentState;
 
-        [Inject]
-        private void Inject(PassTurnState passTurnState)
-        {
-            _passTurnState = passTurnState;
-        }
-        
-        private void Awake()
+        IState ICurrentStateProvider.CurrentState => _fsm.CurrentState;
+
+        void IInitializable.Initialize()
         {
             _fsm = new FiniteStateMachine();
             
-            _fsm.EnterState(_passTurnState);
+            _fsm.EnterState(StatesContainer.StartGameState);
         }
 
-        private void Update()
+        void ITickable.Tick()
         {
             var stateToSwitch = _fsm.CurrentState.Update();
             if (stateToSwitch != null)

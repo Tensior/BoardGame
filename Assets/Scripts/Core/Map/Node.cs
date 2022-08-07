@@ -9,7 +9,8 @@ namespace Core.Map
 
         public Vector3 Position => transform.position;
         public List<Node> NextNodes => _nextNodes;
-        
+        public float FreeYPosition { get; set; } = Constants.PlayerYOffset;
+
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;

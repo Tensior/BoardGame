@@ -1,16 +1,26 @@
+using System.Collections.Generic;
 using System.Linq;
 using Configs;
-using UnityEngine;
 
 namespace Core.Players
 {
-    public class PlayersProvider : MonoBehaviour, IPlayersProvider
+    public class PlayersProvider : IPlayersProvider
     {
-        [SerializeField] private Player[] _players;
-        
+        private readonly Player[] _players;
+        private readonly Dictionary<PlayerID, Player> _playersDict;
+
+        public PlayersProvider(Player[] players)
+        {
+            _players = players;
+            _playersDict = players.ToDictionary(player => player.PlayerID, player => player);
+        }
+
+        Player[] IPlayersProvider.Players => _players;
+
         Player IPlayersProvider.GetPlayer(PlayerID playerID)
         {
-            return _players.FirstOrDefault(player => player.PlayerID == playerID);
+            _playersDict.TryGetValue(playerID, out var player);
+            return player;
         }
     }
 }

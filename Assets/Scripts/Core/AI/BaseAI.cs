@@ -14,7 +14,7 @@ namespace Core.AI
 
         protected ITurnsProvider TurnsProvider;
         protected IInputController InputController;
-        private GameStateManager _gameStateManager;
+        private ICurrentStateProvider _currentStateProvider;
         private PlayerID _playerId;
         private float _actionCooldownLeft;
 
@@ -22,11 +22,11 @@ namespace Core.AI
         private void Inject(
             ITurnsProvider turnsProvider, 
             IInputController inputController,
-            GameStateManager gameStateManager)
+            ICurrentStateProvider currentStateProvider)
         {
             TurnsProvider = turnsProvider;
             InputController = inputController;
-            _gameStateManager = gameStateManager;
+            _currentStateProvider = currentStateProvider;
         }
 
         private void Start()
@@ -44,7 +44,7 @@ namespace Core.AI
 
             if (_actionCooldownLeft <= 0)
             {
-                Act(_gameStateManager.CurrentState);
+                Act(_currentStateProvider.CurrentState);
             }
             else
             {

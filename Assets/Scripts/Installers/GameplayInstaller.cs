@@ -13,16 +13,18 @@ namespace Installers
             InstallInput();
             InstallStates();
             InstallTurns();
+            SetupExecutionOrder();
         }
 
         private void InstallInput()
         {
-            Container.BindInterfacesTo<InputManager>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.BindInterfacesTo<InputManager>().AsSingle().NonLazy();
         }
 
         private void InstallStates()
         {
-            Container.Bind<GameStateManager>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.BindInterfacesTo<GameStateManager>().AsSingle().NonLazy();
+            Container.Bind<StartGameState>().AsSingle().NonLazy();
             Container.Bind<PassTurnState>().AsSingle().NonLazy();
             Container.Bind<StartTurnState>().AsSingle().NonLazy();
             Container.Bind<SmallUseDiceState>().AsSingle().NonLazy();
@@ -33,6 +35,12 @@ namespace Installers
         private void InstallTurns()
         {
             Container.BindInterfacesTo<TurnsManager>().AsSingle().NonLazy();
+        }
+
+        private void SetupExecutionOrder()
+        {
+            Container.BindTickableExecutionOrder<GameStateManager>(0);
+            Container.BindTickableExecutionOrder<InputManager>(10);
         }
     }
 }

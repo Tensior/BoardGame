@@ -1,8 +1,8 @@
-using UnityEngine;
+using Zenject;
 
 namespace Input
 {
-    public class InputManager : MonoBehaviour, IInputProvider, IInputController
+    public class InputManager : IInputProvider, IInputController, ITickable
     {
         private bool _isSmallDiceChosen;
         private bool _isLargeDiceChosen;
@@ -29,7 +29,7 @@ namespace Input
             set => _isDiceStopped = value;
         }
 
-        private void LateUpdate()
+        void ITickable.Tick()
         {
             _isSmallDiceChosen = false;
             _isLargeDiceChosen = false;
