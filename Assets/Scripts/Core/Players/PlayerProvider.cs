@@ -4,20 +4,20 @@ using Configs;
 
 namespace Core.Players
 {
-    public class PlayersProvider : IPlayersProvider
+    public class PlayerProvider : IPlayerProvider
     {
-        private readonly Player[] _players;
-        private readonly Dictionary<PlayerID, Player> _playersDict;
+        private readonly IPlayer[] _players;
+        private readonly Dictionary<PlayerID, IPlayer> _playersDict;
 
-        public PlayersProvider(Player[] players)
+        public PlayerProvider(IPlayer[] players)
         {
             _players = players;
             _playersDict = players.ToDictionary(player => player.PlayerID, player => player);
         }
 
-        Player[] IPlayersProvider.Players => _players;
+        IPlayer[] IPlayerProvider.Players => _players;
 
-        Player IPlayersProvider.GetPlayer(PlayerID playerID)
+        IPlayer IPlayerProvider.GetPlayer(PlayerID playerID)
         {
             _playersDict.TryGetValue(playerID, out var player);
             return player;

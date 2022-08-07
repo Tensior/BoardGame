@@ -36,7 +36,7 @@ namespace Core.States
                         _turnsProvider.IsSmallDiceAvailable,
                         _turnsProvider.IsLargeDiceAvailable);
                     break;
-                case PlayerID.Enemy1:
+                case PlayerID.Enemy:
                     _gameTurnMediator.SetDicesAvailability(
                         false,
                         false);

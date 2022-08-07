@@ -1,36 +1,80 @@
 using Configs;
 using Core.Map;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Core
 {
-    public class Player : MonoBehaviour
+    [RequireComponent(typeof(NavMeshAgent))]
+    public class Player : MonoBehaviour, IPlayer
     {
-        public PlayerID PlayerID;
+        private static readonly int IsMovingToNextNode = Animator.StringToHash("IsMovingToNextNode");
+        
+        [SerializeField] private PlayerID _playerID;
 
         private Node _currentNode;
         private Node _nextNode;
+        private Animator _animator;
+        private NavMeshAgent _navMeshAgent;
 
-        public void SetCurrentNode(Node node)
+        PlayerID IPlayer.PlayerID => _playerID;
+        bool IPlayer.IsMoving => _nextNode != null;
+        Node IPlayer.CurrentNode
+        {
+            get => _currentNode;
+            set => SetCurrentNode(value);
+        }
+        Node IPlayer.NextNode
+        {
+            get => _nextNode;
+            set => SetNextNode(value);
+        }
+
+        Transform IPlayer.CameraTarget => transform;
+
+        private void Awake()
+        {
+            _animator = GetComponentInChildren<Animator>();
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+        }
+
+        private void Update()
+        {
+            if (_nextNode != null && _navMeshAgent.remainingDistance < 0.0001f)
+            {
+                SetCurrentNode(_nextNode);
+                SetNextNode(null);
+            }
+        }
+
+        private void SetCurrentNode(Node value)
         {
             if (_currentNode != null)
             {
                 _currentNode.FreeYPosition -= Constants.PlayerYOffset;
             }
-            
-            _currentNode = node;
-            UpdateCurrentTransform();
-        }
+            else
+            {
+                _navMeshAgent.baseOffset = value.FreeYPosition;
+                _navMeshAgent.Warp(value.Position + transform.up * value.FreeYPosition);
+            }
 
-        private void UpdateCurrentTransform()
-        {
-            transform.position = _currentNode.Position + transform.up * _currentNode.FreeYPosition;
+            _currentNode = value;
             _currentNode.FreeYPosition += Constants.PlayerYOffset;
         }
 
-        public void SetNextNode(Node node)
+        private void SetNextNode(Node value)
         {
-            _nextNode = node;
+            _nextNode = value;
+            
+            if (_nextNode != null)
+            {
+                _navMeshAgent.SetDestination(_nextNode.Position);
+                _navMeshAgent.baseOffset = _nextNode.FreeYPosition;
+            }
+            _navMeshAgent.isStopped = _nextNode == null;
+            
+            _animator.SetBool(IsMovingToNextNode, _nextNode != null);
         }
     }
 }

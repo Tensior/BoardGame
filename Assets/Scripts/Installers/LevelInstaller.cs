@@ -1,22 +1,28 @@
+using Cinemachine;
 using Core;
+using Core.Camera;
 using Core.Map;
 using Core.Players;
 using UnityEngine;
 using Zenject;
+using CameraType = Core.Camera.CameraType;
 
 namespace Installers
 {
     public class LevelInstaller : MonoInstaller
     {
         [SerializeField] private Transform _nodesRoot;
-        [SerializeField] private Player[] _players;
+        [SerializeField] private CinemachineVirtualCamera _overviewCamera;
+        [SerializeField] private CinemachineVirtualCamera _playerCamera;
+        
         public override void InstallBindings()
         {
-            Container.Bind<IPlayersProvider>().To<PlayersProvider>().AsSingle().NonLazy();
-            Container.Bind<Player[]>().FromInstance(_players).WhenInjectedInto<PlayersProvider>().NonLazy();
-
             Container.BindInterfacesTo<MapManager>().AsSingle().NonLazy();
             Container.Bind<Transform>().FromInstance(_nodesRoot).WhenInjectedInto<MapManager>().NonLazy();
+
+            Container.Bind<ICameraController>().To<CameraController>().AsSingle().NonLazy();
+            Container.Bind<CinemachineVirtualCamera>().WithId(CameraType.Overview).FromInstance(_overviewCamera).AsCached().NonLazy();
+            Container.Bind<CinemachineVirtualCamera>().WithId(CameraType.Player).FromInstance(_playerCamera).AsCached().NonLazy();
         }
     }
 }

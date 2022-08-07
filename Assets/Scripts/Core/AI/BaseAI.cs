@@ -31,7 +31,7 @@ namespace Core.AI
 
         private void Start()
         {
-            _playerId = GetComponent<Player>().PlayerID;
+            _playerId = ((IPlayer)GetComponent<Player>()).PlayerID;
             StartCooldown();
         }
 

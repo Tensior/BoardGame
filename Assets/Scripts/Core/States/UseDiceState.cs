@@ -48,7 +48,7 @@ namespace Core.States
             if (_animationPeriodMs <= 0)
             {
                 _cancellationTokenSource.Cancel();
-                return StatesContainer.PassTurnState;
+                return StatesContainer.MovePlayerState;
             }
 
             return null;
@@ -63,7 +63,6 @@ namespace Core.States
         {
             while (!_cancellationToken.IsCancellationRequested)
             {
-                
                 _useDiceMediator.Number = GetNewRandom(_useDiceMediator.Number, Min, Max + 1);
                 
                 await Task.Delay(_animationPeriodMs, _cancellationToken);
