@@ -40,7 +40,7 @@ namespace Core
 
         private void Update()
         {
-            if (_nextNode != null && _navMeshAgent.remainingDistance < 0.0001f)
+            if (_nextNode != null && !_navMeshAgent.pathPending && _navMeshAgent.remainingDistance < 0.0001f)
             {
                 SetCurrentNode(_nextNode);
                 SetNextNode(null);
