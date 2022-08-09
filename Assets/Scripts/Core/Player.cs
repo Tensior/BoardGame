@@ -28,7 +28,7 @@ namespace Core
             get => _currentNode;
             set => SetCurrentNode(value);
         }
-        Transform IPlayer.CameraTarget => transform;
+        Transform IPlayer.Transform => transform;
 
         void IPlayer.SetNodePath(List<Node> nodePath)
         {

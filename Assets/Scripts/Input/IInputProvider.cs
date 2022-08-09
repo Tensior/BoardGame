@@ -5,5 +5,6 @@
         bool IsSmallDiceChosen { get; }
         bool IsLargeDiceChosen { get; }
         bool IsDiceStopped { get; }
+        int? SelectedDirection { get; }
     }
 }

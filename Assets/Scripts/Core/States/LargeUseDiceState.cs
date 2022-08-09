@@ -5,8 +5,8 @@ namespace Core.States
 {
     public class LargeUseDiceState : UseDiceState
     {
-        public LargeUseDiceState(UseDiceMediator useDiceMediator, IInputProvider inputProvider) 
-            : base(useDiceMediator, inputProvider) { }
+        public LargeUseDiceState(UseDiceMediator useDiceMediator, IInputProvider inputProvider, PlayerMovesHolder playerMovesHolder) 
+            : base(useDiceMediator, inputProvider, playerMovesHolder) { }
 
         protected override int Min => 5;
         protected override int Max => 10;

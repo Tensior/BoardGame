@@ -1,5 +1,4 @@
-﻿using Configs;
-using Core.States;
+﻿using Core.States;
 using Core.Turns;
 using Input;
 using UnityEngine;
@@ -14,8 +13,8 @@ namespace Core.AI
 
         protected ITurnsProvider TurnsProvider;
         protected IInputController InputController;
+        protected IPlayer BotPlayer;
         private ICurrentStateProvider _currentStateProvider;
-        private PlayerID _playerId;
         private float _actionCooldownLeft;
 
         [Inject]
@@ -31,13 +30,13 @@ namespace Core.AI
 
         private void Start()
         {
-            _playerId = ((IPlayer)GetComponent<Player>()).PlayerID;
+            BotPlayer = GetComponent<Player>();
             StartCooldown();
         }
 
         private void Update()
         {
-            if (_playerId != TurnsProvider.CurrentPlayerID)
+            if (BotPlayer.PlayerID != TurnsProvider.CurrentPlayerID)
             {
                 return;
             }
@@ -64,12 +63,18 @@ namespace Core.AI
                     StartCooldown();
                     UseDiceAct();
                     break;
+                case SelectDirectionState:
+                    StartCooldown();
+                    SelectDirectionAct();
+                    break;
             }
         }
 
         protected abstract void StartTurnAct();
 
         protected abstract void UseDiceAct();
+        
+        protected abstract void SelectDirectionAct();
 
         private void StartCooldown()
         {

@@ -10,6 +10,7 @@ namespace Core.States
     {
         private readonly UseDiceMediator _useDiceMediator;
         private readonly IInputProvider _inputProvider;
+        private readonly PlayerMovesHolder _playerMovesHolder;
 
         private int _animationPeriodMs;
         private int _animationPeriodDecreaseStepMs;
@@ -19,10 +20,11 @@ namespace Core.States
         protected abstract int Min { get; }
         protected abstract int Max { get; }
 
-        protected UseDiceState(UseDiceMediator useDiceMediator, IInputProvider inputProvider)
+        protected UseDiceState(UseDiceMediator useDiceMediator, IInputProvider inputProvider, PlayerMovesHolder playerMovesHolder)
         {
             _useDiceMediator = useDiceMediator;
             _inputProvider = inputProvider;
+            _playerMovesHolder = playerMovesHolder;
         }
 
         void IState.Enter()
@@ -57,6 +59,7 @@ namespace Core.States
         void IState.Exit()
         {
             _useDiceMediator.Hide();
+            _playerMovesHolder.MovesLeft = _useDiceMediator.Number;
         }
 
         private async Task UseDiceAnimationAsync()

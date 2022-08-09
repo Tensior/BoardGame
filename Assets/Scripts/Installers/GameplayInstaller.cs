@@ -34,7 +34,10 @@ namespace Installers
             Container.Bind<SmallUseDiceState>().AsSingle().NonLazy();
             Container.Bind<LargeUseDiceState>().AsSingle().NonLazy();
             Container.Bind<MovePlayerState>().AsSingle().NonLazy();
+            Container.Bind<SelectDirectionState>().AsSingle().NonLazy();
             Container.Bind<StatesContainer>().AsSingle().NonLazy();
+            
+            Container.Bind<PlayerMovesHolder>().AsSingle().NonLazy();
         }
 
         private void InstallTurns()

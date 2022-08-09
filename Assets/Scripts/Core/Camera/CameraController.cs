@@ -27,8 +27,8 @@ namespace Core.Camera
             _overviewCamera.Priority = 0;
             
             _playerCamera.Priority = 10;
-            _playerCamera.Follow = player.CameraTarget;
-            _playerCamera.LookAt = player.CameraTarget;
+            _playerCamera.Follow = player.Transform;
+            _playerCamera.LookAt = player.Transform;
         }
     }
 }

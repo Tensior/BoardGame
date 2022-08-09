@@ -17,6 +17,7 @@ namespace Installers
             Container.Bind<GameHUDVM>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<GameTurnVM>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.Bind<UseDiceVM>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.Bind<PlayerMoveDirectionsVM>().FromComponentInHierarchy().AsSingle().NonLazy();
         }
 
         private void InstallMediators()
@@ -24,6 +25,7 @@ namespace Installers
             Container.Bind<GameHUDMediator>().AsSingle().NonLazy();
             Container.Bind<GameTurnMediator>().AsSingle().NonLazy();
             Container.Bind<UseDiceMediator>().AsSingle().NonLazy();
+            Container.Bind<PlayerMoveDirectionsMediator>().AsSingle().NonLazy();
         }
     }
 }

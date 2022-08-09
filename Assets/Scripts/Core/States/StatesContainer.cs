@@ -8,6 +8,7 @@ namespace Core.States
         public static LargeUseDiceState LargeUseDiceState { get; private set; }
         public static PassTurnState PassTurnState { get; private set; }
         public static MovePlayerState MovePlayerState { get; private set; }
+        public static SelectDirectionState SelectDirectionState { get; private set; }
 
         public StatesContainer(
             StartGameState startGameState,
@@ -15,7 +16,8 @@ namespace Core.States
             StartTurnState startTurnState,
             SmallUseDiceState smallUseDiceState,
             LargeUseDiceState largeUseDiceState,
-            MovePlayerState movePlayerState)
+            MovePlayerState movePlayerState,
+            SelectDirectionState selectDirectionState)
         {
             StartGameState = startGameState;
             PassTurnState = passTurnState;
@@ -23,6 +25,7 @@ namespace Core.States
             SmallUseDiceState = smallUseDiceState;
             LargeUseDiceState = largeUseDiceState;
             MovePlayerState = movePlayerState;
+            SelectDirectionState = selectDirectionState;
         }
     }
 }

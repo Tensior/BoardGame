@@ -5,5 +5,6 @@ namespace Input
         bool IsSmallDiceChosen { set; }
         bool IsLargeDiceChosen { set; }
         bool IsDiceStopped { set; }
+        int? SelectedDirection { set; }
     }
 }

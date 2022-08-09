@@ -10,7 +10,7 @@ namespace Core
         PlayerID PlayerID { get; }
         bool IsMoving { get; }
         Node CurrentNode { get; set; }
-        Transform CameraTarget { get; }
+        Transform Transform { get; }
         void SetNodePath(List<Node> nodes);
     }
 }

@@ -7,7 +7,6 @@ namespace UIView.ViewModels.Base
     {
         private bool _isShown;
 
-        [Binding]
         public bool IsShown
         {
             get => _isShown;
@@ -19,7 +18,7 @@ namespace UIView.ViewModels.Base
                 }
 
                 _isShown = value;
-                OnPropertyChanged(nameof(IsShown));
+                gameObject.SetActive(_isShown);
             }
         }
     }

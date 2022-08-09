@@ -1183,6 +1183,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a8fa0236e58b9342abb261512982143, type: 3}
+--- !u!1 &1425425523570617117 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8417474050952492047, guid: 8a8fa0236e58b9342abb261512982143, type: 3}
+  m_PrefabInstance: {fileID: 7428899770072358674}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &835389881743344840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425425523570617117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1360956885, guid: c7bede90fe34f984fbb3e44973aa3428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModelMethodName: UIView.ViewModels.GameHUDVM.ExitToMainMenu
+  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!224 &2897076232987872339 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5705141016757850945, guid: 8a8fa0236e58b9342abb261512982143, type: 3}

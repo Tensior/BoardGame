@@ -30,6 +30,11 @@ namespace Core.AI
             InputController.IsDiceStopped = true;
         }
 
+        protected override void SelectDirectionAct()
+        {
+            InputController.SelectedDirection = Random.Range(0, BotPlayer.CurrentNode.NextNodes.Count);
+        }
+
         private void ChooseSmallDice()
         {
             InputController.IsSmallDiceChosen = true;
