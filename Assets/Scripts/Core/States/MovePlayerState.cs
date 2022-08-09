@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using Core.Camera;
+using Core.Map;
 using Core.Players;
 using Core.Turns;
 using UIMediation.Mediators;
@@ -12,6 +14,7 @@ namespace Core.States
         private readonly IPlayerProvider _playerProvider;
         private readonly ICameraController _cameraController;
         private readonly UseDiceMediator _useDiceMediator;
+        private readonly List<Node> _nodePath = new();
         private IPlayer _player;
         private int _stepsLeft;
 
@@ -45,9 +48,17 @@ namespace Core.States
             {
                 return StatesContainer.PassTurnState;
             }
+
+            var node = _player.CurrentNode;
+            _nodePath.Clear();
+            while (node.NextNodes.Count == 1 && _stepsLeft > 0)
+            {
+                --_stepsLeft;
+                node = node.NextNodes.First();
+                _nodePath.Add(node);
+            }
             
-            --_stepsLeft;
-            _player.NextNode = _player.CurrentNode.NextNodes.First();
+            _player.SetNodePath(_nodePath);
             return null;
         }
 

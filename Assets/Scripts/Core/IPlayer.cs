@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Configs;
 using Core.Map;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Core
         PlayerID PlayerID { get; }
         bool IsMoving { get; }
         Node CurrentNode { get; set; }
-        Node NextNode { get; set; }
         Transform CameraTarget { get; }
+        void SetNodePath(List<Node> nodes);
     }
 }

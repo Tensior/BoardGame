@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Configs;
 using Core.Map;
 using UnityEngine;
@@ -9,13 +11,15 @@ namespace Core
     public class Player : MonoBehaviour, IPlayer
     {
         private static readonly int IsMovingToNextNode = Animator.StringToHash("IsMovingToNextNode");
-        
+        private const float NODE_POSITION_THRESHOLD = 0.0001f;
+
         [SerializeField] private PlayerID _playerID;
 
         private Node _currentNode;
         private Node _nextNode;
         private Animator _animator;
         private NavMeshAgent _navMeshAgent;
+        private List<Node>.Enumerator _nodePath;
 
         PlayerID IPlayer.PlayerID => _playerID;
         bool IPlayer.IsMoving => _nextNode != null;
@@ -24,13 +28,14 @@ namespace Core
             get => _currentNode;
             set => SetCurrentNode(value);
         }
-        Node IPlayer.NextNode
-        {
-            get => _nextNode;
-            set => SetNextNode(value);
-        }
-
         Transform IPlayer.CameraTarget => transform;
+
+        void IPlayer.SetNodePath(List<Node> nodePath)
+        {
+            _nodePath = nodePath.GetEnumerator();
+            _nodePath.MoveNext();
+            SetNextNode(_nodePath.Current);
+        }
 
         private void Awake()
         {
@@ -40,7 +45,23 @@ namespace Core
 
         private void Update()
         {
-            if (_nextNode != null && !_navMeshAgent.pathPending && _navMeshAgent.remainingDistance < 0.0001f)
+            if (_nextNode == null || _navMeshAgent.pathPending)
+            {
+                return;
+            }
+
+            var decelerationDist = (_navMeshAgent.stoppingDistance +
+                                     _navMeshAgent.velocity.sqrMagnitude / _navMeshAgent.acceleration * 0.5f)
+                                    * 1.05f;
+            if (_navMeshAgent.remainingDistance < decelerationDist && _navMeshAgent.remainingDistance > NODE_POSITION_THRESHOLD)
+            {
+                if (_nodePath.MoveNext())
+                {
+                    SetNextNode(_nodePath.Current);
+                }
+            }
+
+            if (_navMeshAgent.remainingDistance < NODE_POSITION_THRESHOLD)
             {
                 SetCurrentNode(_nextNode);
                 SetNextNode(null);
