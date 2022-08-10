@@ -1,4 +1,3 @@
-using System.Linq;
 using Core.Camera;
 using Core.Players;
 using Core.Turns;
@@ -32,22 +31,23 @@ namespace Core.States
                 return null;
             }
 
-            if (PlayerMovesHolder.MovesLeft == 0)
+            var node = Player.CurrentNode;
+            
+            if (PlayerMovesHolder.MovesLeft == 0 || node.NextNodes.Count == 0)
             {
-                return StatesContainer.PassTurnState;
+                return StatesContainer.CheckFinishState;
             }
 
-            var node = Player.CurrentNode;
+            if (node.NextNodes.Count > 1)
+            {
+                return StatesContainer.SelectDirectionState;
+            }
+            
             NodePath.Clear();
             FillNodePath(node);
-
-            if (NodePath.Any())
-            {
-                Player.SetNodePath(NodePath);
-                return null;
-            }
-
-            return StatesContainer.SelectDirectionState;
+            Player.SetNodePath(NodePath);
+            
+            return null;
         }
 
         public override void Exit()

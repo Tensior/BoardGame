@@ -6,19 +6,19 @@ namespace Core.States
     public class StartGameState : IState
     {
         private readonly IPlayerProvider _playerProvider;
-        private readonly IMapManager _mapManager;
+        private readonly IMapProvider _mapProvider;
 
-        public StartGameState(IPlayerProvider playerProvider, IMapManager mapManager)
+        public StartGameState(IPlayerProvider playerProvider, IMapProvider mapProvider)
         {
             _playerProvider = playerProvider;
-            _mapManager = mapManager;
+            _mapProvider = mapProvider;
         }
         
         void IState.Enter()
         {
             foreach (var player in _playerProvider.Players)
             {
-                player.CurrentNode = _mapManager.StartNode;
+                player.CurrentNode = _mapProvider.StartNode;
             }
         }
 

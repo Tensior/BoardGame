@@ -35,6 +35,8 @@ namespace Installers
             Container.Bind<LargeUseDiceState>().AsSingle().NonLazy();
             Container.Bind<MovePlayerState>().AsSingle().NonLazy();
             Container.Bind<SelectDirectionState>().AsSingle().NonLazy();
+            Container.Bind<CheckFinishState>().AsSingle().NonLazy();
+            Container.Bind<GameFinishState>().AsSingle().NonLazy();
             Container.Bind<StatesContainer>().AsSingle().NonLazy();
             
             Container.Bind<PlayerMovesHolder>().AsSingle().NonLazy();

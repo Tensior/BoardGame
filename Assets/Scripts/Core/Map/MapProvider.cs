@@ -5,16 +5,16 @@ using Zenject;
 
 namespace Core.Map
 {
-    public class MapManager : IMapManager, IInitializable
+    public class MapProvider : IMapProvider, IInitializable
     {
         private readonly List<Node> _nodes;
         private Node _startNode;
         private Node _finishNode;
 
-        Node IMapManager.StartNode => _startNode;
-        Node IMapManager.FinishNode => _finishNode;
+        Node IMapProvider.StartNode => _startNode;
+        Node IMapProvider.FinishNode => _finishNode;
 
-        public MapManager(Transform nodesRoot)
+        public MapProvider(Transform nodesRoot)
         {
             _nodes = nodesRoot.GetComponentsInChildren<Node>().ToList();
         }

@@ -1,6 +1,6 @@
 namespace Core.Map
 {
-    public interface IMapManager
+    public interface IMapProvider
     {
         Node StartNode { get; }
         Node FinishNode { get; }

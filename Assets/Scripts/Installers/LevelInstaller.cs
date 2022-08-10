@@ -17,8 +17,8 @@ namespace Installers
         
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<MapManager>().AsSingle().NonLazy();
-            Container.Bind<Transform>().FromInstance(_nodesRoot).WhenInjectedInto<MapManager>().NonLazy();
+            Container.BindInterfacesTo<MapProvider>().AsSingle().NonLazy();
+            Container.Bind<Transform>().FromInstance(_nodesRoot).WhenInjectedInto<MapProvider>().NonLazy();
 
             Container.Bind<ICameraController>().To<CameraController>().AsSingle().NonLazy();
             Container.Bind<CinemachineVirtualCamera>().WithId(CameraType.Overview).FromInstance(_overviewCamera).AsCached().NonLazy();
