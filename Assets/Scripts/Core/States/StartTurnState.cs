@@ -28,14 +28,13 @@ namespace Core.States
             switch (_turnsProvider.CurrentPlayerID)
             {
                 case PlayerID.Player:
+                    _gameTurnMediator.Show();
                     _gameTurnMediator.SetDicesAvailability(
                         _turnsProvider.IsSmallDiceAvailable,
                         _turnsProvider.IsLargeDiceAvailable);
                     break;
                 case PlayerID.Enemy:
-                    _gameTurnMediator.SetDicesAvailability(
-                        false,
-                        false);
+                    _gameTurnMediator.Hide();
                     break;
             }
         }
@@ -56,7 +55,7 @@ namespace Core.States
 
         void IState.Exit()
         {
-            //TODO: Hide turn interface or make it non-interactable
+            _gameTurnMediator.Hide();
         }
     }
 }

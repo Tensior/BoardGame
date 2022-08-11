@@ -58,7 +58,6 @@ namespace Core.States
 
         void IState.Exit()
         {
-            _useDiceMediator.Hide();
             _playerMovesHolder.MovesLeft = _useDiceMediator.Number;
         }
 
