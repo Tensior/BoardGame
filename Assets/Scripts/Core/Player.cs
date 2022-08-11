@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Configs;
 using Core.Map;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace Core
     public class Player : MonoBehaviour, IPlayer
     {
         private static readonly int IsMovingToNextNode = Animator.StringToHash("IsMovingToNextNode");
-        private const float NODE_POSITION_THRESHOLD = 0.0001f;
+        private const float NODE_POSITION_THRESHOLD = 0.5f;
 
         [SerializeField] private PlayerID _playerID;
 
@@ -20,6 +20,7 @@ namespace Core
         private Animator _animator;
         private NavMeshAgent _navMeshAgent;
         private List<Node>.Enumerator _nodePath;
+        private float? _distBetweenNodes;
 
         PlayerID IPlayer.PlayerID => _playerID;
         bool IPlayer.IsMoving => _nextNode != null;
@@ -50,21 +51,23 @@ namespace Core
                 return;
             }
 
-            var decelerationDist = (_navMeshAgent.stoppingDistance +
-                                     _navMeshAgent.velocity.sqrMagnitude / _navMeshAgent.acceleration * 0.5f)
-                                    * 1.05f;
-            if (_navMeshAgent.remainingDistance < decelerationDist && _navMeshAgent.remainingDistance > NODE_POSITION_THRESHOLD)
+            if (!_distBetweenNodes.HasValue)
             {
-                if (_nodePath.MoveNext())
-                {
-                    SetNextNode(_nodePath.Current);
-                }
+                _distBetweenNodes = _navMeshAgent.remainingDistance;
+            }
+            
+            if (Math.Abs(_currentNode.FreeYPosition - _nextNode.FreeYPosition) > 0.0001)
+            {
+                _navMeshAgent.baseOffset = Mathf.Lerp(
+                    _nextNode.FreeYPosition,
+                    _currentNode.FreeYPosition,
+                    _navMeshAgent.remainingDistance / _distBetweenNodes.Value);
             }
 
             if (_navMeshAgent.remainingDistance < NODE_POSITION_THRESHOLD)
             {
                 SetCurrentNode(_nextNode);
-                SetNextNode(null);
+                SetNextNode(_nodePath.MoveNext() ? _nodePath.Current : null);
             }
         }
 
@@ -72,26 +75,37 @@ namespace Core
         {
             if (_currentNode != null)
             {
-                _currentNode.FreeYPosition -= Constants.PlayerYOffset;
+                _currentNode.GetComponent<SpriteRenderer>().color = Color.blue;
             }
             else
             {
-                _navMeshAgent.baseOffset = value.FreeYPosition;
                 _navMeshAgent.Warp(value.Position + transform.up * value.FreeYPosition);
             }
 
             _currentNode = value;
             _currentNode.FreeYPosition += Constants.PlayerYOffset;
+            _currentNode.GetComponent<SpriteRenderer>().color = Color.red;
         }
 
         private void SetNextNode(Node value)
         {
+            if (_nextNode != null)
+            {
+                _nextNode.transform.localScale /= 3;
+            }
+
             _nextNode = value;
             
             if (_nextNode != null)
             {
                 _navMeshAgent.SetDestination(_nextNode.Position);
-                _navMeshAgent.baseOffset = _nextNode.FreeYPosition;
+                _distBetweenNodes = null;
+                _nextNode.transform.localScale *= 3;
+                
+                if (_currentNode != null)
+                {
+                    _currentNode.FreeYPosition -= Constants.PlayerYOffset;
+                }
             }
             _navMeshAgent.isStopped = _nextNode == null;
             

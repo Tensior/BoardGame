@@ -20,7 +20,7 @@ namespace UIMediation.Mediators
         public void SetLoose()
         {
             ViewModel.FinishText = "YOU LOST! GOOD LUCK NEXT TIME!";
-            ViewModel.Color = Color.green;
+            ViewModel.Color = Color.red;
         }
     }
 }
